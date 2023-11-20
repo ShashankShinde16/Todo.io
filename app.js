@@ -33,7 +33,7 @@ app.get("/", (req,res)=>{
     let today = date.toLocaleDateString("hi-IN",option);
 
     const findTodo = async ()=>{
-        const list = await Todo.find();
+        const list = await Todo.find().maxTimeMS(30000);
         res.render("temp", {listName:today, newItem: list});
     }
 
@@ -50,7 +50,7 @@ app.post("/", (req,res)=>{
 
 app.post("/delete/newList", (req,res)=>{
     const newList = async ()=>{
-        await Todo.deleteMany({__v: 0});
+        await Todo.deleteMany({__v: 0}).maxTimeMS(30000);
     }
     newList()
     res.redirect("/");
